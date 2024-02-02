@@ -4,18 +4,19 @@ import wtf.ultra.hutao.command.httoggle;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
 
 import net.weavemc.loader.api.ModInitializer;
+import net.weavemc.loader.api.command.CommandBus;
 import net.weavemc.loader.api.event.EventBus;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
-import net.weavemc.loader.api.command.CommandBus;
+
+import org.lwjgl.input.Keyboard;
 
 import java.util.stream.IntStream;
 
-@SuppressWarnings("unused")
 public class HuTao implements ModInitializer {
     private static final ResourceLocation[] images;
     private final long mspf = 100;
@@ -31,7 +32,6 @@ public class HuTao implements ModInitializer {
 
     @Override
     public void preInit() {
-
         System.out.println("[HuTao] Initializing");
         CommandBus.register(new httoggle()); // command name
 
@@ -52,6 +52,20 @@ public class HuTao implements ModInitializer {
                 mc.ingameGUI.drawTexturedModalRect(x, y, u, v, w, h);
             }
         });
+
+        // Add KeyListener for 'O' key
+        new Thread(() -> {
+            while (true) {
+                if (Keyboard.isKeyDown(Keyboard.KEY_O)) {
+                    setEnabled(!enabled);
+                    try {
+                        Thread.sleep(500); // Add a delay to avoid toggling too fast
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
     static {
