@@ -26,6 +26,7 @@ public class HuTao implements ModInitializer {
     public static void setEnabled(boolean value) {
         enabled = value;
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "HuTao has been " + (enabled ? "enabled" : "disabled") + "."));
+        System.out.println("HuTao has been " + (enabled ? "enabled" : "disabled"));
     }
 
     @Override
