@@ -1,6 +1,6 @@
 plugins {
     java
-    id("com.github.weave-mc.weave-gradle") version "fac948db7f"
+    id("com.github.weave-mc.weave-gradle") version "649dba7468"
 }
 
 group = "wtf.ultra"
@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.github.weave-mc:weave-loader:v0.2.4")
+    compileOnly("com.github.weave-mc:weave-loader:1246af816e")
 
     compileOnly("org.spongepowered:mixin:0.8.5")
 }
