@@ -3,6 +3,7 @@ package wtf.ultra.hutao;
 import wtf.ultra.hutao.command.htduplo;
 import wtf.ultra.hutao.command.httoggle;
 import wtf.ultra.hutao.command.htspeed;
+import wtf.ultra.hutao.command.htscale;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -26,6 +27,8 @@ public class HuTao implements ModInitializer {
     public static boolean enabled = false; // the mode by default is off
     public static double duplicate = 1.0; // default scale factor
     public static int speed = 1; // default speed
+    public static double scaleFactor = 1.0; // default scale factor
+
 
     public static void setEnabled(boolean value) {
         enabled = value;
@@ -42,6 +45,11 @@ public class HuTao implements ModInitializer {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "HuTao speed set to " + speed + "."));
     }
 
+    public static void setScaleFactor(double value) {
+        scaleFactor = value;
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "HuTao scale set to " + scaleFactor + "."));
+    }
+
     @Override
     public void preInit() {
 
@@ -49,13 +57,14 @@ public class HuTao implements ModInitializer {
         CommandBus.register(new httoggle()); // command to toggle
         CommandBus.register(new htduplo());  // command for duplication
         CommandBus.register(new htspeed());  // command for speed
+        CommandBus.register(new htscale()); // command for scale
 
         EventBus.subscribe(RenderGameOverlayEvent.Pre.class, event -> {
             if (enabled) {
                 long now;
                 if ((now = System.currentTimeMillis()) - instant >= mspf) {
                     instant = now;
-                    frame = (frame + speed) % images.length;
+                    frame = (frame * speed) % images.length;
                 }
 
                 Minecraft mc = Minecraft.getMinecraft();
@@ -66,8 +75,8 @@ public class HuTao implements ModInitializer {
                 int w = (int) (baseHeight * duplicate);
                 int h = (int) (baseHeight * duplicate);
                 int u = 0, v = 0;
-                int x = resolution.getScaledWidth() - w;
-                int y = resolution.getScaledHeight() - h;
+                int x = (int) (resolution.getScaledWidth() - w * scaleFactor);
+                int y = (int) (resolution.getScaledHeight() - h * scaleFactor);
                 mc.ingameGUI.drawTexturedModalRect(x, y, u, v, w, h);
             }
         });
