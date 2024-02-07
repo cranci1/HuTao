@@ -3,9 +3,9 @@
 
 
 ## Commands
-/httoggle = Toggle the mod (by default is off)\n
-/htdupli = Duplicate the amount of HuTao rendered (default is 1)
-/htspees = Change the speed of the images (default is 1)
-/htscale = Change the default scale of HuTao (default is 1)
+<p>/httoggle = Toggle the mod (by default is off)</p>
+<p>/htdupli = Duplicate the amount of HuTao rendered (default is 1)</p>
+<p>/htspees = Change the speed of the images (default is 1)</p>
+<p>/htscale = Change the default scale of HuTao (default is 1)</p>
 
-more comming
+<p>more comming</p>
