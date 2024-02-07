@@ -2,6 +2,7 @@ package wtf.ultra.hutao;
 
 import wtf.ultra.hutao.command.htduplo;
 import wtf.ultra.hutao.command.httoggle;
+import wtf.ultra.hutao.command.htspeed;  // Import the new htspeed command
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -24,6 +25,7 @@ public class HuTao implements ModInitializer {
     private int frame = 0;
     public static boolean enabled = false; // the mode by default is off
     public static double duplicate = 1.0; // default scale factor
+    public static int speed = 1; // default speed
 
     public static void setEnabled(boolean value) {
         enabled = value;
@@ -35,12 +37,18 @@ public class HuTao implements ModInitializer {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "HuTao scale set to " + duplicate + "."));
     }
 
+    public static void setSpeed(int value) {
+        speed = value;
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "HuTao speed set to " + speed + "."));
+    }
+
     @Override
     public void preInit() {
 
         System.out.println("[HuTao] Initializing");
-        CommandBus.register(new httoggle()); // command toggle
-        CommandBus.register(new htduplo()); // command for scale
+        CommandBus.register(new httoggle()); // command to toggle
+        CommandBus.register(new htduplo());  // command for duplication
+        CommandBus.register(new htspeed());  // command for speed
 
         EventBus.subscribe(RenderGameOverlayEvent.Pre.class, event -> {
             if (enabled) {
