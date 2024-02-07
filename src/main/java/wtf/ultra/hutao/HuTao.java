@@ -2,7 +2,7 @@ package wtf.ultra.hutao;
 
 import wtf.ultra.hutao.command.htduplo;
 import wtf.ultra.hutao.command.httoggle;
-import wtf.ultra.hutao.command.htspeed;  // Import the new htspeed command
+import wtf.ultra.hutao.command.htspeed;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -55,7 +55,7 @@ public class HuTao implements ModInitializer {
                 long now;
                 if ((now = System.currentTimeMillis()) - instant >= mspf) {
                     instant = now;
-                    frame = (frame + 1) % images.length;
+                    frame = (frame + speed) % images.length;
                 }
 
                 Minecraft mc = Minecraft.getMinecraft();
