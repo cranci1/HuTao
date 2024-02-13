@@ -4,6 +4,9 @@ import wtf.ultra.hutao.command.htduplo;
 import wtf.ultra.hutao.command.httoggle;
 import wtf.ultra.hutao.command.htspeed;
 
+import wtf.ultra.hutao.command.htx;
+import wtf.ultra.hutao.command.hty;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
@@ -27,6 +30,9 @@ public class HuTao implements ModInitializer {
     public static double duplicate = 1.0; // default scale factor
     public static int speed = 1; // default speed
 
+    public static int x = 1; // default x value
+    public static int y = 1; // default y value
+
     public static void setEnabled(boolean value) {
         enabled = value;
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "HuTao has been " + (enabled ? "enabled" : "disabled") + "."));
@@ -42,6 +48,15 @@ public class HuTao implements ModInitializer {
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "HuTao speed set to " + speed + "."));
     }
 
+    public static void setX(int value) {
+        x = value;
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "HuTao x value set to " + x + "."));
+    }
+    public static void setY(int value) {
+        y = value;
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "HuTao y value set to " + y + "."));
+    }
+
     @Override
     public void preInit() {
 
@@ -49,6 +64,9 @@ public class HuTao implements ModInitializer {
         CommandBus.register(new httoggle()); // command to toggle
         CommandBus.register(new htduplo());  // command for duplication
         CommandBus.register(new htspeed());  // command for speed
+
+        CommandBus.register(new htx());  // command for x value
+        CommandBus.register(new hty());  // command for y value
 
         EventBus.subscribe(RenderGameOverlayEvent.Pre.class, event -> {
             if (enabled) {
@@ -61,8 +79,8 @@ public class HuTao implements ModInitializer {
                 Minecraft mc = Minecraft.getMinecraft();
                 mc.getTextureManager().bindTexture(images[frame]);
                 ScaledResolution resolution = new ScaledResolution(mc);
-                int baseWidth = 256;
-                int baseHeight = 256;
+                int baseWidth = 256 + x ;
+                int baseHeight = 256 + y;
                 int w = (int) (baseHeight * duplicate);
                 int h = (int) (baseHeight * duplicate);
                 int u = 0, v = 0;
